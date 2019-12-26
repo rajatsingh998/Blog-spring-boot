@@ -1,4 +1,5 @@
-package SprigBlog;
+package com.firstdemo.first_demo;
+
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ import java.util.Map;
 public class PostController {
     @Autowired
     private PostService blogService;
-    @RequestMapping(value = "/home")
+    @RequestMapping(value = "/")
     public ModelAndView home() {
         List<Post> allBlogs = blogService.listAll();
 
@@ -31,7 +32,7 @@ public class PostController {
     public String newBlogForm(Map<String, Object> model) {
         Post theBlog = new Post();
         model.put("theBlog", theBlog);
-        return "newBlog";
+        return "newBlog.jsp";
     }
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String saveCustomer(@ModelAttribute("theBlog") Post blog) {
@@ -41,7 +42,7 @@ public class PostController {
 //
     @RequestMapping(value = "/edit")
     public ModelAndView editCustomerForm(@RequestParam int id) {
-        ModelAndView mav = new ModelAndView("edit-blog");
+        ModelAndView mav = new ModelAndView("edit-blog.jsp");
         Post theBlog = blogService.get(id);
         mav.addObject("theBlog", theBlog);
 
@@ -49,7 +50,7 @@ public class PostController {
     }
     @RequestMapping(value ="/delete-confirm")
     public  ModelAndView deleteConfirm(@RequestParam int id){
-        ModelAndView mav= new ModelAndView("confirm-delete");
+        ModelAndView mav= new ModelAndView("confirm-delete.jsp");
         Post theBlog= blogService.get(id);
         mav.addObject("theBlog", theBlog);
         return mav;

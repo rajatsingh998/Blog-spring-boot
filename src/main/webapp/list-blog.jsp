@@ -10,8 +10,9 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
     <title>Customer Manager</title>
 </head>
 <body>
+just trying
 <div align="center">
-    <h3><a href="/BlogMVCJPA_war_exploded/new">Add New Blog</a></h3>
+    <h3><a href="/new">Add New Blog</a></h3>
     <table border="1" cellpadding="5">
         <tr>
             <th>Title</th>
