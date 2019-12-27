@@ -17,6 +17,10 @@ import java.util.Map;
 public class PostController {
     @Autowired
     private PostService blogService;
+
+    @Autowired
+    private CategoryService categoryService;
+
     @RequestMapping(value = "/")
     public ModelAndView home() {
         List<Post> allBlogs = blogService.listAll();
@@ -29,10 +33,19 @@ public class PostController {
     }
 
     @RequestMapping(value ="/new")
-    public String newBlogForm(Map<String, Object> model) {
+    public ModelAndView newBlogForm(Map<String, Object> model) {
+
+            List<Category> allCategories= categoryService.listAll();
+            ModelAndView mv= new ModelAndView();
+            mv.setViewName("newBlog.jsp");
+            mv.addObject("allCategories",allCategories);
+
+
+
         Post theBlog = new Post();
         model.put("theBlog", theBlog);
-        return "newBlog.jsp";
+
+        return mv;
     }
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String saveCustomer(@ModelAttribute("theBlog") Post blog) {

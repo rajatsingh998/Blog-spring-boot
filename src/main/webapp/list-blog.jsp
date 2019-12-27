@@ -7,16 +7,22 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-    <title>Customer Manager</title>
+    <title>All Blogs</title>
 </head>
 <body>
 just trying
 <div align="center">
     <h3><a href="/new">Add New Blog</a></h3>
+
     <table border="1" cellpadding="5">
+
         <tr>
             <th>Title</th>
             <th>Content</th>
+            <th>Created at</th>
+            <th>Updated at </th>
+            <th>tags</th>
+            <th>Action </th>
         </tr>
         <c:forEach items="${allBlogs}" var="theBlog">
             <c:url var="updateLink" value="/edit?id=${theBlog.id}">
@@ -32,6 +38,9 @@ just trying
 
                 <td>${theBlog.title}</td>
                 <td>${theBlog.content}</td>
+                <td>${theBlog.createdAt}</td>
+                <td>${theBlog.updatedAt}</td>
+
                 <td><a href="${updateLink}">Update</a>
                     |
                     <a href="${deleteLink}">Delete</a>

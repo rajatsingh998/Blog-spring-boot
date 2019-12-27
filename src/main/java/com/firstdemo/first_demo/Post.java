@@ -1,25 +1,71 @@
 package com.firstdemo.first_demo;
 
+import jdk.internal.dynalink.linker.LinkerServices;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
-    @Column(name = "authorid")
-    private int authorId;
+
     private String title;
     private String content;
+    @Column(name = "createdat", updatable = false)
+    @CreationTimestamp
+    private Timestamp createdAt;
+    @Column(name="updatedat")
+    @UpdateTimestamp
+    private Timestamp updatedAt;
 
-    public int getAuthorId() {
-        return authorId;
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinColumn(name = "authorid",insertable = false, updatable = false)
+    private User user;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "post_category", joinColumns = {@JoinColumn(name = "id")}, inverseJoinColumns = {@JoinColumn(name = "tagId")})
+    private List<Category> categories;
+
+    public User getUser() {
+        return user;
     }
 
-    public void setAuthorId(int authorId) {
-        this.authorId = authorId;
+    public void setUser(User user) {
+        this.user = user;
     }
+
+    public List<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
+    }
+
+    public Timestamp getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Timestamp createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Timestamp getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Timestamp updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+
+
 
     public int getId() {
         return id;

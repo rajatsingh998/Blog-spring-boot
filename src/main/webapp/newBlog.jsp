@@ -1,4 +1,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page isELIgnored="false" %>
 <%--
   Created by IntelliJ IDEA.
   User: Rajat
@@ -17,7 +19,13 @@
     <br><br>
     Enter Your Content: <form:input path="content"/>
     <br><br>
+    Select Categories:
+    <br><br>
 
+    <c:forEach items="${allCategories}" var="theBlog">
+            ${theBlog.name}
+
+    </c:forEach>
     <input type="submit" value="Submit"/>
 </form:form>
 
