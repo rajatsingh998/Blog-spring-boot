@@ -1,3 +1,7 @@
+<%@ page import="com.firstdemo.first_demo.Category" %>
+<%@ page import="com.firstdemo.first_demo.Post" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -13,7 +17,10 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 just trying
 <div align="center">
     <h3><a href="/new">Add New Blog</a></h3>
-
+    <br><br>
+    <h2> Sort By:</h2>
+    <a href="/sortbyUpdate">Update Time</a>
+    <a href="/sortbyCreate">Create Time</a>
     <table border="1" cellpadding="5">
 
         <tr>
@@ -24,7 +31,9 @@ just trying
             <th>tags</th>
             <th>Action </th>
         </tr>
+
         <c:forEach items="${allBlogs}" var="theBlog">
+
             <c:url var="updateLink" value="/edit?id=${theBlog.id}">
 
             </c:url>

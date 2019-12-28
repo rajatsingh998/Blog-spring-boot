@@ -19,8 +19,12 @@ public class PostService {
         repo.save(theBlog);
     }
 
-    public void saveDouble (Post firstBlog, Category category){
-        repo.save(firstBlog); repo1.save(category);
+
+    public  List<Post> sortByCreate(){ return repo.findAllByOrderByCreatedAtAsc();
+
+    }
+    public  List<Post> sortByUpdate(){ return repo.findAllByOrderByUpdatedAtAsc();
+
     }
     public String saveMyBlog(Post myPost, Category myCategory) {
 
