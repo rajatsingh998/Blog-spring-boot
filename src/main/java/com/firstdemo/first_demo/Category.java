@@ -21,7 +21,19 @@ public class Category {
     @Column(name="updated_at")
     @UpdateTimestamp
     private Timestamp updatedAt;
-    @ManyToMany(cascade=CascadeType.ALL,mappedBy = "categories")
+
+    public Category() {
+    }
+
+    public Category(String name) {
+        this.name = name;
+    }
+
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            },mappedBy = "categories")
     private List<Post> posts=new ArrayList<>();
 
     public List<Post> getPosts() {

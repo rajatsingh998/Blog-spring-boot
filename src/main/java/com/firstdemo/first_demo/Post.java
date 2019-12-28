@@ -28,9 +28,13 @@ public class Post {
     @JoinColumn(name = "authorid",insertable = false, updatable = false)
     private User user;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            })
     @JoinTable(name = "post_category", joinColumns = {@JoinColumn(name = "id")}, inverseJoinColumns = {@JoinColumn(name = "tagId")})
-    private List<Category> categories;
+    private List<Category> categories=new ArrayList<>();
 
     public User getUser() {
         return user;

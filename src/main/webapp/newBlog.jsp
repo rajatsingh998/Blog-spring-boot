@@ -14,19 +14,23 @@
     <title>Title</title>
 </head>
 <body>
-<form:form action="save" method="POST" modelAttribute="theBlog">
+<form:form action="/new" method="POST" modelAttribute="blog">
     Enter Title Name: <form:input path="title"/>
     <br><br>
     Enter Your Content: <form:input path="content"/>
     <br><br>
-    Select Categories:
+    Select tags:
     <br><br>
 
-    <c:forEach items="${allCategories}" var="theBlog">
-            ${theBlog.name}
+<form:form modelAttribute="category">
 
-    </c:forEach>
+            Sci-fic<form:checkbox path="name" value="Sci-fic"/>
+            Motivational<form:checkbox path="name" value="Motivational"/>
+
+
     <input type="submit" value="Submit"/>
+</form:form>
+
 </form:form>
 
 </body>
