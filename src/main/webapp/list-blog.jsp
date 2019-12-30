@@ -16,6 +16,18 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <body>
 just trying
 <div align="center">
+    <form method="get" action="search">
+        <input type="text" name="keyword" /> &nbsp;
+        <input type="submit" value="Search" />
+    </form>
+
+    <form action="/filter" method="get">
+        Sci-fic<input type="checkbox" value="Sci-fic"/>
+        Motivational<input type="checkbox" value="Motivational"/>
+        Travel <input type="checkbox" value="Travel"/>
+
+        <input type="submit" value="Submit"/>
+    </form>
     <h3><a href="/new">Add New Blog</a></h3>
     <br><br>
     <h2> Sort By:</h2>
@@ -32,7 +44,7 @@ just trying
             <th>Action </th>
         </tr>
 
-        <c:forEach items="${allBlogs}" var="theBlog">
+        <c:forEach items="${listPost}" var="theBlog">
 
             <c:url var="updateLink" value="/edit?id=${theBlog.id}">
 
@@ -58,6 +70,13 @@ just trying
             </tr>
         </c:forEach>
     </table>
+
 </div>
+<%
+    for (int i=0;i*3<(int)request.getAttribute("totalPost");i++){%>
+<a href="?page=<%=i%>"><%=i%></a>
+<%
+    }
+%>
 </body>
 </html>

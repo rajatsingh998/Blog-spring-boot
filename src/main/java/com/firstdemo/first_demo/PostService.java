@@ -1,6 +1,9 @@
 package com.firstdemo.first_demo;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -43,9 +46,18 @@ public class PostService {
         repo.save(myPost);
         return "Blog saved";
     }
-    public List<Post> listAll() {
-        return (List<Post>) repo.findAll();
+    public List<Post> search(String keyword) {
+        return repo.search(keyword);
     }
+    public List<Post> listAll() {
+        return repo.findAll();
+    }
+    public  Page<Post> findPage(Pageable pageable){
+        return repo.findAll(pageable);
+    }
+//    List <Post> search( String name){
+//        return repo.findAllByTitleOrContent(name);
+//    }
 
     public Post get(int id) {
         return repo.findById(id).get();
@@ -53,5 +65,12 @@ public class PostService {
 
     public void delete(int id) {
         repo.deleteById(id);
+    }
+
+    public Page<Post> findAll(PageRequest pageable) {
+        return repo.findAll((Pageable) pageable);
+    }
+    public  List<Post> find(Category category){
+        return  repo.findByCategories(category);
     }
 }

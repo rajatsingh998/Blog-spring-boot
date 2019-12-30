@@ -26,7 +26,7 @@
 
             Sci-fic<form:checkbox path="name" value="Sci-fic"/>
             Motivational<form:checkbox path="name" value="Motivational"/>
-
+            Travel <form:checkbox path="name" value="Travel"/>
 
     <input type="submit" value="Submit"/>
 </form:form>

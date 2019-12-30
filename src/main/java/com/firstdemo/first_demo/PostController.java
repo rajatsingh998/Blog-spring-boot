@@ -5,13 +5,12 @@ package com.firstdemo.first_demo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.awt.print.Pageable;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 public class PostController {
@@ -22,32 +21,57 @@ public class PostController {
     private CategoryService categoryService;
 
     @RequestMapping(value = "/")
-    public ModelAndView home() {
-        Pageable firstPageWithTwoElements = (Pageable) PageRequest.of(0, 2);
-        Page<Post> allProducts = blogService.findAll(firstPageWithTwoElements);
-        List<Post> allBlogs = blogService.listAll();
-        ModelAndView mv = new ModelAndView();
-        mv.setViewName("list-blog.jsp");
-        mv.addObject("allBlogs", allBlogs);
+    public ModelAndView home(@RequestParam(defaultValue = "0") int page,@RequestParam(defaultValue = "title") String sortAttribute ) {
+            PageRequest pageable =  PageRequest.of(page, 3, Sort.by(sortAttribute));
+            Page<Post> list = blogService.findAll(pageable);
+            List<Post> allBlogs = list.getContent();
+            ModelAndView mav = new ModelAndView("list-blog.jsp");
+            System.out.println(blogService.listAll().size());
+            mav.addObject("totalPost",blogService.listAll().size());
+            mav.addObject("listPost", allBlogs);
 
-        return mv;
+
+        return mav;
     }
+
+
+
+    @RequestMapping("/search")
+    public ModelAndView search(@RequestParam String keyword) {
+        List<Post> result = blogService.search(keyword);
+        ModelAndView mav = new ModelAndView("search.jsp");
+        mav.addObject("totalPost",blogService.listAll().size());
+        mav.addObject("result", result);
+
+        return mav;
+    }
+
     @RequestMapping(value = "/sortbyCreate")
-    public ModelAndView sortByCreate(){
-        List<Post> allBlogs = blogService.sortByCreate();
-        ModelAndView mv = new ModelAndView();
-        mv.setViewName("list-blog.jsp");
-        mv.addObject("allBlogs", allBlogs);
-        return mv;
+    public ModelAndView sortByCreate(@RequestParam(defaultValue = "0") int page,@RequestParam(defaultValue = "createdAt") String sortAttribute){
+        PageRequest pageable =  PageRequest.of(page, 3, Sort.by(sortAttribute));
+        Page<Post> list = blogService.findAll(pageable);
+        List<Post> allBlogs = list.getContent();
+        ModelAndView mav = new ModelAndView("list-blog.jsp");
+        System.out.println(blogService.listAll().size());
+        mav.addObject("totalPost",blogService.listAll().size());
+        mav.addObject("listPost", allBlogs);
+
+
+        return mav;
     }
 
     @RequestMapping(value = "/sortbyUpdate")
-    public ModelAndView sortByUpdate(){
-        List<Post> allBlogs = blogService.sortByUpdate();
-        ModelAndView mv = new ModelAndView();
-        mv.setViewName("list-blog.jsp");
-        mv.addObject("allBlogs", allBlogs);
-        return mv;
+    public ModelAndView sortByUpdate(@RequestParam(defaultValue = "0") int page,@RequestParam(defaultValue = "updatedAt") String sortAttribute){
+        PageRequest pageable =  PageRequest.of(page, 3, Sort.by(sortAttribute));
+        Page<Post> list = blogService.findAll(pageable);
+        List<Post> allBlogs = list.getContent();
+        ModelAndView mav = new ModelAndView("list-blog.jsp");
+        System.out.println(blogService.listAll().size());
+        mav.addObject("totalPost",blogService.listAll().size());
+        mav.addObject("listPost", allBlogs);
+
+
+        return mav;
     }
 
 
@@ -98,6 +122,28 @@ public class PostController {
 
         return mav;
     }
+//    @RequestMapping(value = "/filter")
+//    public ModelAndView filter(@RequestParam(value = "checkboxName", required = false) String[] checkboxValue){
+//        List<Post> listPost=null;
+//        ModelAndView modelAndView=new ModelAndView("filter");
+//        for (String itr : name) {
+//            Category category = categoryService.getByName(itr);
+//            listPost=category.getPosts();
+//        }
+//        modelAndView.addObject("listPost",listPost);
+//        return modelAndView;
+//    }
+
+    @RequestMapping("/filter")
+    public ModelAndView searchCat(@RequestParam String keyword) {
+        System.out.println(keyword);
+        Category category= categoryService.findCategoryByName(keyword);
+        List<Post> result = blogService.find(category);
+        ModelAndView mav = new ModelAndView("filtered.jsp");
+        mav.addObject("result", result);
+        return mav;
+    }
+
     @RequestMapping(value ="/delete-confirm")
     public  ModelAndView deleteConfirm(@RequestParam int id){
         ModelAndView mav= new ModelAndView("confirm-delete.jsp");
