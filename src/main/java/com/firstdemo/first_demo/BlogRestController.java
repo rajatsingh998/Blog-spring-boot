@@ -1,41 +1,42 @@
-//package com.firstdemo.first_demo;
+package com.firstdemo.first_demo;
+
+import com.firstdemo.first_demo.Category;
+import com.firstdemo.first_demo.CategoryService;
+import com.firstdemo.first_demo.Post;
+import com.firstdemo.first_demo.PostService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
 //
-//
-//
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.data.domain.Page;
-//import org.springframework.data.domain.PageRequest;
-//import org.springframework.data.domain.Sort;
-//import org.springframework.stereotype.Controller;
-//import org.springframework.web.bind.annotation.*;
-//import org.springframework.web.servlet.ModelAndView;
-//
-//import java.util.List;
-//@RestController
-//@Controller
-//public class PostController {
-//    @Autowired
-//    private PostService blogService;
-//
-//    @Autowired
-//    private CategoryService categoryService;
-//
-////    @RequestMapping(value = "/")
-////    public ModelAndView home(@RequestParam(defaultValue = "0") int page,@RequestParam(defaultValue = "title") String sortAttribute ) {
-////        PageRequest pageable =  PageRequest.of(page, 3, Sort.by(sortAttribute));
-////        Page<Post> list = blogService.findAll(pageable);
-////        List<Post> allBlogs = list.getContent();
-////        ModelAndView mav = new ModelAndView("list-blog.jsp");
-////        System.out.println(blogService.listAll().size());
-////        mav.addObject("totalPost",blogService.listAll().size());
-////        mav.addObject("listPost", allBlogs);
-////
-////
-////        return mav;
-////    }
-//
-//
-//
+@RestController
+@RequestMapping("/")
+public class BlogRestController {
+    @Autowired
+    private PostService blogService;
+
+    @Autowired
+    private CategoryService categoryService;
+
+
+
+    @GetMapping(value = "/")
+    @ResponseBody
+    public ResponseEntity<List<Post>> home(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "title") String sortAttribute ) {
+        PageRequest pageable =  PageRequest.of(page, 3, Sort.by(sortAttribute));
+        Page<Post> list = blogService.findAll(pageable);
+        List<Post> allBlogs = list.getContent();
+        return new ResponseEntity<>(allBlogs, HttpStatus.OK);
+    }
+
+
+
 //    @RequestMapping("/search")
 //    public ModelAndView search(@RequestParam String keyword) {
 //        List<Post> result = blogService.search(keyword);
@@ -157,4 +158,4 @@
 //        blogService.delete(id);
 //        return "redirect:/";
 //    }
-//}
+}

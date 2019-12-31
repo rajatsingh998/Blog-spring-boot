@@ -1,5 +1,6 @@
 package com.firstdemo.first_demo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jdk.internal.dynalink.linker.LinkerServices;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -27,7 +28,7 @@ public class Post {
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "authorid",insertable = false, updatable = false)
     private User user;
-
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {
                     CascadeType.PERSIST,
