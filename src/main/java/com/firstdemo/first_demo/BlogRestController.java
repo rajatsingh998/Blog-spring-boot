@@ -47,48 +47,55 @@ public class BlogRestController {
 //        return mav;
 //    }
 //
-//    @RequestMapping(value = "/sortbyCreate")
-//    public ModelAndView sortByCreate(@RequestParam(defaultValue = "0") int page,@RequestParam(defaultValue = "createdAt") String sortAttribute){
-//        PageRequest pageable =  PageRequest.of(page, 3, Sort.by(sortAttribute));
-//        Page<Post> list = blogService.findAll(pageable);
-//        List<Post> allBlogs = list.getContent();
-//        ModelAndView mav = new ModelAndView("list-blog.jsp");
-//        System.out.println(blogService.listAll().size());
-//        mav.addObject("totalPost",blogService.listAll().size());
-//        mav.addObject("listPost", allBlogs);
+
+    @GetMapping(value = "/sort-by-create")
+    @ResponseBody
+    public ResponseEntity<List<Post>> sortByCreate(@RequestParam(defaultValue = "0") int page,@RequestParam(defaultValue = "createdAt") String sortAttribute){
+        PageRequest pageable =  PageRequest.of(page, 3, Sort.by(sortAttribute));
+        Page<Post> list = blogService.findAll(pageable);
+        List<Post> allBlogs = list.getContent();
+        return new ResponseEntity<>(allBlogs, HttpStatus.OK);
+    }
+//
+    @GetMapping(value = "/sort-by-update")
+    @ResponseBody
+    public ResponseEntity<List<Post>> sortByUpdate(@RequestParam(defaultValue = "0") int page,@RequestParam(defaultValue = "updatedAt") String sortAttribute){
+        PageRequest pageable =  PageRequest.of(page, 3, Sort.by(sortAttribute));
+        Page<Post> list = blogService.findAll(pageable);
+        List<Post> allBlogs = list.getContent();
+
+        return new ResponseEntity<>(allBlogs, HttpStatus.OK);
+    }
+
+    @DeleteMapping(value = "/delete")
+    public  ResponseEntity<List<Post>> deleteBlog(@RequestParam int id) {
+        blogService.delete(id);
+        List<Post> allBlogs=blogService.listAll();
+        return new ResponseEntity<>(allBlogs, HttpStatus.OK);
+    }
 //
 //
-//        return mav;
-//    }
-//
-//    @RequestMapping(value = "/sortbyUpdate")
-//    public ModelAndView sortByUpdate(@RequestParam(defaultValue = "0") int page,@RequestParam(defaultValue = "updatedAt") String sortAttribute){
-//        PageRequest pageable =  PageRequest.of(page, 3, Sort.by(sortAttribute));
-//        Page<Post> list = blogService.findAll(pageable);
-//        List<Post> allBlogs = list.getContent();
-//        ModelAndView mav = new ModelAndView("list-blog.jsp");
-//        System.out.println(blogService.listAll().size());
-//        mav.addObject("totalPost",blogService.listAll().size());
-//        mav.addObject("listPost", allBlogs);
-//
-//
-//        return mav;
-//    }
-//
-//
-//    @GetMapping(value ="/new")
-//    public ModelAndView newBlogForm() {
-//        Post post=new Post();
-//        Category category= new Category();
-////        List<Category> allCategories= categoryService.listAll();
-//        ModelAndView mv= new ModelAndView("newBlog.jsp");
-//        mv.addObject("blog",post);
-//        mv.addObject("category",category );
-////        mv.addObject("allCategories",allCategories);
-//
-////
-//        return  mv;
-//    }
+    @PostMapping(value ="/new")
+    public  ResponseEntity<List<Post>> newBlogForm(@RequestParam String title,@RequestParam String content,@RequestParam String category ) {
+
+        Category category1= new Category(category);
+        Post post= new Post(title,content);
+        blogService.saveMyBlog(post,category1);
+        List<Post> allBlogs=blogService.listAll();
+        return new ResponseEntity<>(allBlogs, HttpStatus.OK);
+    }
+        @PutMapping(value = "/edit")
+        public  ResponseEntity<List<Post>>  editCustomerForm(@RequestParam int id,@RequestParam String title,@RequestParam String content,@RequestParam String category) {
+        Post post = blogService.get(id);
+        post.setContent(content);
+        post.setTitle(title);
+        Category category1= new Category(category);
+        blogService.saveMyBlog(post,category1);
+        List<Post> allBlogs=blogService.listAll();
+        return new ResponseEntity<>(allBlogs, HttpStatus.OK);
+
+
+    }
 //
 //
 //    @PostMapping("/new")
@@ -113,16 +120,7 @@ public class BlogRestController {
 //        return "redirect:/";
 //    }
 //    //
-//    @RequestMapping(value = "/edit")
-//    public ModelAndView editCustomerForm(@RequestParam int id) {
-//        Category category= new Category();
-//        ModelAndView mav = new ModelAndView("edit-blog.jsp");
-//        Post theBlog = blogService.get(id);
-//        mav.addObject("category",category );
-//        mav.addObject("theBlog", theBlog);
-//
-//        return mav;
-//    }
+
 ////    @RequestMapping(value = "/filter")
 ////    public ModelAndView filter(@RequestParam(value = "checkboxName", required = false) String[] checkboxValue){
 ////        List<Post> listPost=null;
@@ -153,9 +151,5 @@ public class BlogRestController {
 //        return mav;
 //    }
 //
-//    @RequestMapping(value = "/delete")
-//    public String deleteBlog(@RequestParam int id) {
-//        blogService.delete(id);
-//        return "redirect:/";
-//    }
+
 }

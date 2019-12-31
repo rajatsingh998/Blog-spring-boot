@@ -16,11 +16,20 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
 
+    public Post(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
+
     private String title;
     private String content;
     @Column(name = "createdat", updatable = false)
     @CreationTimestamp
     private Timestamp createdAt;
+
+    public Post() {
+    }
+
     @Column(name="updatedat")
     @UpdateTimestamp
     private Timestamp updatedAt;
