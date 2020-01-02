@@ -12,8 +12,7 @@ import java.util.List;
 
 public interface PostRepository extends JpaRepository<Post, Integer> {
     Page<Post> findAll(Pageable pageable);
-    //    @Query("select  s from Post s where title or content like  %?1%")
-//    List<Post> findAllByTitleOrContent(String name);
+
     @Query(value = "SELECT c FROM Post c WHERE c.title LIKE '%' || :keyword || '%'"
             + " OR c.content LIKE '%' || :keyword || '%'")
     List<Post> search(@Param("keyword") String keyword);

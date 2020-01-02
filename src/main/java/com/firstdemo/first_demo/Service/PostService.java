@@ -2,8 +2,10 @@ package com.firstdemo.first_demo.Service;
 
 import com.firstdemo.first_demo.Model.Category;
 import com.firstdemo.first_demo.Model.Post;
+import com.firstdemo.first_demo.Model.User;
 import com.firstdemo.first_demo.Repository.CategoryRepository;
 import com.firstdemo.first_demo.Repository.PostRepository;
+import com.firstdemo.first_demo.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,6 +23,8 @@ public class PostService {
     @Autowired
     CategoryRepository repo1;
 
+    @Autowired
+    UserRepository repo2;
 
     public void save(Post theBlog) {
         repo.save(theBlog);
@@ -33,7 +37,7 @@ public class PostService {
     public  List<Post> sortByUpdate(){ return repo.findAllByOrderByUpdatedAtAsc();
 
     }
-    public String saveMyBlog(Post myPost, Category myCategory) {
+    public String saveMyBlog(Post myPost, Category myCategory, String name) {
 
 
 
@@ -47,6 +51,8 @@ public class PostService {
                 myPost.getCategories().add(category1);
             }
         }
+        User user=repo2.findByName(name);
+        myPost.setUser(user);
         repo.save(myPost);
         return "Blog saved";
     }
@@ -54,9 +60,16 @@ public class PostService {
         return repo.search(keyword);
     }
     public List<Post> listAll() {
+//    User obj=new User("rajat","ygrygf.com","abc","admin");
+//    User obj5=new User("user","ygrygf.com","user","user");
+//
+//    repo2.save(obj);
+//    repo2.save(obj5);
         return repo.findAll();
+
     }
     public  Page<Post> findPage(Pageable pageable){
+
         return repo.findAll(pageable);
     }
 //    List <Post> search( String name){

@@ -33,9 +33,14 @@ public class Post {
     @UpdateTimestamp
     private Timestamp updatedAt;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-    @JoinColumn(name = "authorid",insertable = false, updatable = false)
+    @ManyToOne(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            })
+    @JoinColumn
     private User user;
+
     @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {

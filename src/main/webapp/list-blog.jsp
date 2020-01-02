@@ -1,3 +1,4 @@
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
@@ -13,13 +14,17 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
     <title>All Blogs</title>
 </head>
 <body>
-
+<security:authorize access="!isAuthenticated()">
+    <%
+        response.sendRedirect("/");
+    %>
+</security:authorize>
 <div align="center">
     <form method="get" action="search">
         <input type="text" name="keyword" /> &nbsp;
         <input type="submit" value="Search" />
     </form>
-
+<%  %>
 <%--    <form action="/filter" method="get">--%>
 <%--        Sci-fic<input type="checkbox" value="Sci-fic"/>--%>
 <%--        Motivational<input type="checkbox" value="Motivational"/>--%>

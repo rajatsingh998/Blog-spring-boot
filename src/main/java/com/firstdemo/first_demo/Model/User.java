@@ -1,5 +1,8 @@
 package com.firstdemo.first_demo.Model;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
@@ -8,18 +11,47 @@ import java.util.List;
 @Table(name = "user_blog")
 public class User {
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
     private String name;
+
+
+
     private String email;
     private String password;
-    @Column(name = "created_at")
+    private String role;
+    @Column(name = "created_at",updatable = false)
+    @CreationTimestamp
     private Timestamp createdAt;
+
+    public User(String name, String email, String password, String role) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+    }
+
     @Column(name="updated_at")
+    @UpdateTimestamp
     private Timestamp updatedAt;
 
-    @OneToMany(mappedBy = "user")
+    public User() {
+    }
 
+    @OneToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            },mappedBy = "user")
     private List<Post> posts;
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 
     public List<Post> getPosts() {
         return posts;

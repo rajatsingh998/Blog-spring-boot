@@ -8,15 +8,23 @@
   Time: 14:31
   To change this template use File | Settings | File Templates.
 --%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>Title</title>
 </head>
 <body>
+
+<security:authorize access="!isAuthenticated()">
+<%
+    response.sendRedirect("/");
+%>
+</security:authorize>
 <form:form action="/new" method="POST" modelAttribute="blog">
     Enter Title Name: <form:input path="title"/>
     <br><br>
+    <input type="hidden" name="userName" value="<security:authentication property="name"/>">
     Enter Your Content: <form:input path="content"/>
     <br><br>
     Select tags:

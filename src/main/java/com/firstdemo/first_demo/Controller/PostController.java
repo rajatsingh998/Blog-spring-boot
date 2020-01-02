@@ -2,6 +2,7 @@ package com.firstdemo.first_demo.Controller;
 
 
 import com.firstdemo.first_demo.Model.Category;
+import com.firstdemo.first_demo.Model.User;
 import com.firstdemo.first_demo.Service.CategoryService;
 import com.firstdemo.first_demo.Model.Post;
 import com.firstdemo.first_demo.Service.PostService;
@@ -33,6 +34,7 @@ public class PostController {
         System.out.println(blogService.listAll().size());
         mav.addObject("totalPost",blogService.listAll().size());
         mav.addObject("listPost", allBlogs);
+
 
 
         return mav;
@@ -96,15 +98,15 @@ public class PostController {
 
     @PostMapping("/new")
     public String postSave(@ModelAttribute("blog") Post post,
-                           @ModelAttribute("category") Category category){
-        blogService.saveMyBlog(post,category);
-
+                           @ModelAttribute("category") Category category,@RequestParam("userName") String name ){
+        blogService.saveMyBlog(post,category,name);
+        System.out.println(name);
         return "redirect:/";
     }
     @PostMapping("/edit-save")
     public String posttSave(@ModelAttribute("blog") Post post,
-                            @ModelAttribute("category") Category category){
-        blogService.saveMyBlog(post,category);
+                            @ModelAttribute("category") Category category,@RequestParam("userName") String name){
+        blogService.saveMyBlog(post,category,name);
 
         return "redirect:/";
     }
