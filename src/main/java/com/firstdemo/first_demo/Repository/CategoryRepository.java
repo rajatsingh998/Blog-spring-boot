@@ -1,7 +1,7 @@
-package com.firstdemo.first_demo;
+package com.firstdemo.first_demo.Repository;
 
+import com.firstdemo.first_demo.Model.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.CrudRepository;
 
 public interface CategoryRepository extends JpaRepository<Category, Integer> {
     Category findCategoryByNameContains(String cateforyname);

@@ -1,4 +1,4 @@
-package com.firstdemo.first_demo;
+package com.firstdemo.first_demo.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;

@@ -1,4 +1,4 @@
-package com.firstdemo.first_demo;
+package com.firstdemo.first_demo.Configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

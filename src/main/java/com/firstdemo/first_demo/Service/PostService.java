@@ -1,5 +1,9 @@
-package com.firstdemo.first_demo;
+package com.firstdemo.first_demo.Service;
 
+import com.firstdemo.first_demo.Model.Category;
+import com.firstdemo.first_demo.Model.Post;
+import com.firstdemo.first_demo.Repository.CategoryRepository;
+import com.firstdemo.first_demo.Repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

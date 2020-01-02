@@ -1,5 +1,7 @@
-package com.firstdemo.first_demo;
+package com.firstdemo.first_demo.Service;
 
+import com.firstdemo.first_demo.Model.Category;
+import com.firstdemo.first_demo.Repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

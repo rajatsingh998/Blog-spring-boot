@@ -1,7 +1,6 @@
-package com.firstdemo.first_demo;
+package com.firstdemo.first_demo.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jdk.internal.dynalink.linker.LinkerServices;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
