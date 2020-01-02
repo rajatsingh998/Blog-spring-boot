@@ -84,8 +84,8 @@ public class PostService {
         repo.deleteById(id);
     }
 
-    public Page<Post> findAll(PageRequest pageable) {
-        return repo.findAll((Pageable) pageable);
+    public List<Post> findAll(PageRequest pageable) {
+        return repo.findAllBy((Pageable) pageable);
     }
     public  List<Post> find(Category category){
         return  repo.findByCategories(category);

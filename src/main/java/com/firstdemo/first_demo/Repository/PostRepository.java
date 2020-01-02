@@ -11,7 +11,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface PostRepository extends JpaRepository<Post, Integer> {
-    Page<Post> findAll(Pageable pageable);
+    List<Post> findAllBy(Pageable pageable);
 
     @Query(value = "SELECT c FROM Post c WHERE c.title LIKE '%' || :keyword || '%'"
             + " OR c.content LIKE '%' || :keyword || '%'")

@@ -6,6 +6,7 @@ import com.firstdemo.first_demo.Model.User;
 import com.firstdemo.first_demo.Service.CategoryService;
 import com.firstdemo.first_demo.Model.Post;
 import com.firstdemo.first_demo.Service.PostService;
+import com.firstdemo.first_demo.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -21,6 +23,8 @@ import java.util.List;
 public class PostController {
     @Autowired
     private PostService blogService;
+    @Autowired
+    UserService userService;
 
     @Autowired
     private CategoryService categoryService;
@@ -28,12 +32,12 @@ public class PostController {
     @RequestMapping(value = "/")
     public ModelAndView home(@RequestParam(defaultValue = "0") int page,@RequestParam(defaultValue = "title") String sortAttribute ) {
         PageRequest pageable =  PageRequest.of(page, 3, Sort.by(sortAttribute));
-        Page<Post> list = blogService.findAll(pageable);
-        List<Post> allBlogs = list.getContent();
+        List<Post> list = blogService.findAll(pageable);
+
         ModelAndView mav = new ModelAndView("list-blog.jsp");
         System.out.println(blogService.listAll().size());
         mav.addObject("totalPost",blogService.listAll().size());
-        mav.addObject("listPost", allBlogs);
+        mav.addObject("listPost", list);
 
 
 
@@ -55,12 +59,12 @@ public class PostController {
     @RequestMapping(value = "/sortbyCreate")
     public ModelAndView sortByCreate(@RequestParam(defaultValue = "0") int page,@RequestParam(defaultValue = "createdAt") String sortAttribute){
         PageRequest pageable =  PageRequest.of(page, 3, Sort.by(sortAttribute));
-        Page<Post> list = blogService.findAll(pageable);
-        List<Post> allBlogs = list.getContent();
+        List<Post> list = blogService.findAll(pageable);
+
         ModelAndView mav = new ModelAndView("list-blog.jsp");
         System.out.println(blogService.listAll().size());
         mav.addObject("totalPost",blogService.listAll().size());
-        mav.addObject("listPost", allBlogs);
+        mav.addObject("listPost", list);
 
 
         return mav;
@@ -69,12 +73,12 @@ public class PostController {
     @RequestMapping(value = "/sortbyUpdate")
     public ModelAndView sortByUpdate(@RequestParam(defaultValue = "0") int page,@RequestParam(defaultValue = "updatedAt") String sortAttribute){
         PageRequest pageable =  PageRequest.of(page, 3, Sort.by(sortAttribute));
-        Page<Post> list = blogService.findAll(pageable);
-        List<Post> allBlogs = list.getContent();
+        List<Post> list = blogService.findAll(pageable);
+
         ModelAndView mav = new ModelAndView("list-blog.jsp");
         System.out.println(blogService.listAll().size());
         mav.addObject("totalPost",blogService.listAll().size());
-        mav.addObject("listPost", allBlogs);
+        mav.addObject("listPost", list);
 
 
         return mav;
@@ -95,6 +99,21 @@ public class PostController {
         return  mv;
     }
 
+    @GetMapping(value ="/register")
+    public ModelAndView newregis(){
+        User user= new User();
+        ModelAndView mv= new ModelAndView("registration.jsp");
+        mv.addObject("user",user);
+        return  mv;
+    }
+    @PostMapping(value ="/register")
+    public ModelAndView newregits(@ModelAttribute("user") User user){
+       user.setRole("user");
+       userService.save(user);
+        ModelAndView mv= new ModelAndView("registered.jsp");
+
+        return  mv;
+    }
 
     @PostMapping("/new")
     public String postSave(@ModelAttribute("blog") Post post,
