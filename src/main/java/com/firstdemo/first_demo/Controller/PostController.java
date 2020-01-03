@@ -46,6 +46,9 @@ public class PostController {
         mav.addObject("totalPost",blogService.listAll().size());
         mav.addObject("listPost", list);
         
+        User user= new User("admin","adim.gmail.com","$2a$10$KwyouBDLc1eSMI3bpi1mce/EmSAXce9J7iPSMba1ZOzv07.n8tPD6","admin");
+        repo2.save(user);
+
 
 
         return mav;
