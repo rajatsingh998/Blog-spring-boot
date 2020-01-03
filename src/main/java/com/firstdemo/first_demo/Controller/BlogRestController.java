@@ -32,9 +32,9 @@
 //    @ResponseBody
 //    public ResponseEntity<List<Post>> home(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "title") String sortAttribute ) {
 //        PageRequest pageable =  PageRequest.of(page, 3, Sort.by(sortAttribute));
-//        Page<Post> list = blogService.findAll(pageable);
-//        List<Post> allBlogs = list.getContent();
-//        return new ResponseEntity<>(allBlogs, HttpStatus.OK);
+//        List<Post> list = blogService.findAll(pageable);
+//
+//        return new ResponseEntity<>(list, HttpStatus.OK);
 //    }
 //
 //
@@ -45,19 +45,19 @@
 //    @ResponseBody
 //    public ResponseEntity<List<Post>> sortByCreate(@RequestParam(defaultValue = "0") int page,@RequestParam(defaultValue = "createdAt") String sortAttribute){
 //        PageRequest pageable =  PageRequest.of(page, 3, Sort.by(sortAttribute));
-//        Page<Post> list = blogService.findAll(pageable);
-//        List<Post> allBlogs = list.getContent();
-//        return new ResponseEntity<>(allBlogs, HttpStatus.OK);
+//        List<Post> list = blogService.findAll(pageable);
+//
+//        return new ResponseEntity<>(list, HttpStatus.OK);
 //    }
 ////
 //    @GetMapping(value = "/sort-by-update")
 //    @ResponseBody
 //    public ResponseEntity<List<Post>> sortByUpdate(@RequestParam(defaultValue = "0") int page,@RequestParam(defaultValue = "updatedAt") String sortAttribute){
 //        PageRequest pageable =  PageRequest.of(page, 3, Sort.by(sortAttribute));
-//        Page<Post> list = blogService.findAll(pageable);
-//        List<Post> allBlogs = list.getContent();
+//        List<Post> list = blogService.findAll(pageable);
 //
-//        return new ResponseEntity<>(allBlogs, HttpStatus.OK);
+//
+//        return new ResponseEntity<>(list, HttpStatus.OK);
 //    }
 //
 //    @DeleteMapping(value = "/delete")
@@ -68,22 +68,22 @@
 //    }
 ////
 ////
-//    @PostMapping(value ="/new")
-//    public  ResponseEntity<List<Post>> newBlogForm(@RequestParam String title,@RequestParam String content,@RequestParam String category ) {
+//    @PostMapping(value ="/new/{title}/{content}/{category}")
+//    public  ResponseEntity<List<Post>> newBlogForm(@PathVariable("title") String title,@PathVariable("content") String content,@PathVariable("category") String category ) {
 //
 //        Category category1= new Category(category);
 //        Post post= new Post(title,content);
-//        blogService.saveMyBlog(post,category1);
+//        blogService.saveMyBlogok(post,category1);
 //        List<Post> allBlogs=blogService.listAll();
 //        return new ResponseEntity<>(allBlogs, HttpStatus.OK);
 //    }
-//        @PutMapping(value = "/edit")
-//        public  ResponseEntity<List<Post>>  editCustomerForm(@RequestParam int id,@RequestParam String title,@RequestParam String content,@RequestParam String category) {
+//        @PutMapping(value = "/edit/{id}/{title}/{content}/{category}")
+//        public  ResponseEntity<List<Post>>  editCustomerForm(@PathVariable("id") int id,@PathVariable("title") String title,@PathVariable("content") String content,@PathVariable("category") String category) {
 //        Post post = blogService.get(id);
 //        post.setContent(content);
 //        post.setTitle(title);
 //        Category category1= new Category(category);
-//        blogService.saveMyBlog(post,category1);
+//        blogService.saveMyBlogok(post,category1);
 //        List<Post> allBlogs=blogService.listAll();
 //        return new ResponseEntity<>(allBlogs, HttpStatus.OK);
 //

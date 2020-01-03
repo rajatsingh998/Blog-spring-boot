@@ -90,4 +90,15 @@ public class PostService {
     public  List<Post> find(Category category){
         return  repo.findByCategories(category);
     }
+
+    public String saveMyBlogok(Post post, Category category1) {
+        if(category1.getName()!=null) {
+            String[] cat = category1.getName().split(",");
+            for (String category : cat) {
+                Category category15= repo1.findCategoryByNameContains(category);
+                post.getCategories().add(category15);
+            }
+        }
+        return "Blog saved";}
+
 }
