@@ -2,6 +2,7 @@ package com.firstdemo.first_demo.Controller;
 
 
 import com.firstdemo.first_demo.Model.Category;
+import com.firstdemo.first_demo.Model.CustomException;
 import com.firstdemo.first_demo.Model.User;
 import com.firstdemo.first_demo.Repository.CategoryRepository;
 import com.firstdemo.first_demo.Repository.UserRepository;
@@ -20,7 +21,31 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.List;
+@ControllerAdvice
+class GlobalExceptionController {
 
+    @ExceptionHandler(CustomException.class)
+    public ModelAndView handleCustomException(CustomException ex) {
+
+        ModelAndView model = new ModelAndView("error/generic_error");
+        model.addObject("errCode", ex.getErrCode());
+        model.addObject("errMsg", ex.getErrMsg());
+
+        return model;
+
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ModelAndView handleAllException(Exception ex) {
+
+        ModelAndView model = new ModelAndView("error/generic_error");
+        model.addObject("errMsg", "this is Exception.class");
+
+        return model;
+
+    }
+
+}
 @RestController
 @Controller
 public class PostController {
