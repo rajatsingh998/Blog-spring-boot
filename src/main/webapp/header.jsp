@@ -73,10 +73,10 @@
 
             <li class="nav-item">
                 <sec:authorize access="hasAnyRole('ROLE_ADMIN') || hasAnyRole('ROLE_USER')">
-                    <a class="nav-link text-light" href="http://localhost:8080/logout">Logout</a>
+                    <a class="nav-link text-light" href="/logout">Logout</a>
                 </sec:authorize>
                 <sec:authorize access="!hasAnyRole('ROLE_ADMIN')&& !hasAnyRole('ROLE_USER')  ">
-                    <a class="nav-link text-light" href="http://localhost:8080/login">Login</a>
+                    <a class="nav-link text-light" href="/login">Login</a>
                 </sec:authorize>
 
 
