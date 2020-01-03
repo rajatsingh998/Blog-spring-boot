@@ -29,6 +29,11 @@ public class PostController {
 
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    CategoryRepository repo1;
+
+    @Autowired
+    UserRepository repo2;
 
     @RequestMapping(value = "/")
     public ModelAndView home(@RequestParam(defaultValue = "0") int page,@RequestParam(defaultValue = "title") String sortAttribute ) {
@@ -39,7 +44,14 @@ public class PostController {
         System.out.println(blogService.listAll().size());
         mav.addObject("totalPost",blogService.listAll().size());
         mav.addObject("listPost", list);
-
+        User user=new User("rajat","rajat.gmail.com","abc","admin");
+        repo2.save(user);
+        Category category5=new Category("Travel");
+        Category category55=new Category("Sci-fic");
+        Category category555=new Category("Motivational");
+        repo1.save(category5);
+        repo1.save(category55);
+        repo1.save(category555);
 
 
         return mav;
