@@ -1,6 +1,7 @@
 package com.firstdemo.first_demo.Controller;
 
-
+import com.firstdemo.first_demo.Repository.CategoryRepository;
+import com.firstdemo.first_demo.Repository.UserRepository;
 import com.firstdemo.first_demo.Model.Category;
 import com.firstdemo.first_demo.Model.User;
 import com.firstdemo.first_demo.Service.CategoryService;
