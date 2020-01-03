@@ -51,6 +51,8 @@ public class PostService {
                 myPost.getCategories().add(category1);
             }
         }
+
+
         User user=repo2.findByName(name);
         myPost.setUser(user);
         repo.save(myPost);

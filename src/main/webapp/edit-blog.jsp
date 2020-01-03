@@ -1,3 +1,4 @@
+<%@ page import="com.firstdemo.first_demo.Model.Post" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%--
@@ -19,9 +20,10 @@
     %>
 </security:authorize>
 <form:form action="/edit-save" method="POST" modelAttribute="theBlog">
+    <% Post post= (Post) request.getAttribute("theBlog");%>
     Enter Title Name: <form:input path="title"/>
     <form:hidden path="id"></form:hidden>
-    <input type="hidden" name="userName" value="<security:authentication property="name"/>">
+    <input type="hidden" name="userName" value="<%=post.getUser().getName() %>">
     <br><br>
     Enter Your Content: <form:input path="content"/>
     <br><br>

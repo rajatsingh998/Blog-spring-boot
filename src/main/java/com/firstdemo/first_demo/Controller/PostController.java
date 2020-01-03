@@ -3,6 +3,8 @@ package com.firstdemo.first_demo.Controller;
 
 import com.firstdemo.first_demo.Model.Category;
 import com.firstdemo.first_demo.Model.User;
+import com.firstdemo.first_demo.Repository.CategoryRepository;
+import com.firstdemo.first_demo.Repository.UserRepository;
 import com.firstdemo.first_demo.Service.CategoryService;
 import com.firstdemo.first_demo.Model.Post;
 import com.firstdemo.first_demo.Service.PostService;
@@ -29,6 +31,11 @@ public class PostController {
 
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    CategoryRepository repo1;
+
+    @Autowired
+    UserRepository repo2;
 
     @RequestMapping(value = "/")
     public ModelAndView home(@RequestParam(defaultValue = "0") int page,@RequestParam(defaultValue = "title") String sortAttribute ) {
