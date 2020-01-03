@@ -60,14 +60,14 @@ public class PostService {
         return repo.search(keyword);
     }
     public List<Post> listAll() {
-         User user=new User("rajat","rajat.gmail.com","abc","admin");
-        repo2.save(user);
-        Category category5=new Category("Travel");
-        Category category55=new Category("Sci-fic");
-        Category category555=new Category("Motivational");
-        repo1.save(category5);
-        repo1.save(category55);
-        repo1.save(category555);
+//          User user=new User("rajat","rajat.gmail.com","abc","admin");
+//         repo2.save(user);
+//         Category category5=new Category("Travel");
+//         Category category55=new Category("Sci-fic");
+//         Category category555=new Category("Motivational");
+//         repo1.save(category5);
+//         repo1.save(category55);
+//         repo1.save(category555);
 //    User obj=new User("rajat","ygrygf.com","abc","admin");
 //    User obj5=new User("user","ygrygf.com","user","user");
 //
