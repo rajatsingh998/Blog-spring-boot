@@ -18,7 +18,7 @@
 
 <security:authorize access="!isAuthenticated()">
 <%
-    response.sendRedirect("/");
+    response.sendRedirect("/login");
 %>
 </security:authorize>
 <form:form action="/new" method="POST" modelAttribute="blog">

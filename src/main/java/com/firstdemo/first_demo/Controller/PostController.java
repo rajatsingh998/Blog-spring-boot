@@ -8,6 +8,7 @@ import com.firstdemo.first_demo.Model.Post;
 import com.firstdemo.first_demo.Service.PostService;
 import com.firstdemo.first_demo.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -116,25 +117,25 @@ public class PostController {
     }
 
     @PostMapping("/new")
-    public String postSave(@ModelAttribute("blog") Post post,
+    public ModelAndView postSave(@ModelAttribute("blog") Post post,
                            @ModelAttribute("category") Category category,@RequestParam("userName") String name ){
         blogService.saveMyBlog(post,category,name);
         System.out.println(name);
-        return "redirect:/";
+        return new ModelAndView("redirect:/");
     }
     @PostMapping("/edit-save")
-    public String posttSave(@ModelAttribute("blog") Post post,
+    public ModelAndView posttSave(@ModelAttribute("blog") Post post,
                             @ModelAttribute("category") Category category,@RequestParam("userName") String name){
         blogService.saveMyBlog(post,category,name);
 
-        return "redirect:/";
+        return new ModelAndView("redirect:/");
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String saveCustomer(@ModelAttribute("theBlog") Post blog) {
+    public ModelAndView saveCustomer(@ModelAttribute("theBlog") Post blog) {
 
         blogService.save(blog);
-        return "redirect:/";
+        return new ModelAndView("redirect:/");
     }
     //
     @RequestMapping(value = "/edit")
@@ -178,8 +179,19 @@ public class PostController {
     }
 
     @RequestMapping(value = "/delete")
-    public String deleteBlog(@RequestParam int id) {
+    public ModelAndView deleteBlog(@RequestParam int id) {
         blogService.delete(id);
-        return "redirect:/";
+        return new ModelAndView("redirect:/");
     }
+
+    @GetMapping(value = "/view")
+    public ModelAndView showById(@RequestParam int id){
+        ModelAndView mv=new ModelAndView("showBlogById.jsp");
+        Post theBlog= blogService.get(id);
+
+        mv.addObject("blog",theBlog);
+
+        return mv;
+    }
+
 }

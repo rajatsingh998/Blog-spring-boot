@@ -14,21 +14,112 @@
 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <title>All Blogs</title>
 </head>
 <body>
+<jsp:include page="header.jsp" />
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css"/>
+
+
+
+<%
+    ArrayList<Post> allPost = (ArrayList<Post>) request.getAttribute("listPost");
+    int i = 0;
+    for (Post post : allPost) {
+        i++;
+%>
+<div class="container">
+
+    <div class="well">
+        <div class="media">
+            <a class="pull-left" href="#">
+                <img class="media-object" src="http://placekitten.com/150/150" >
+            </a>
+            <div class="media-body">
+
+                <h4 class="media-heading"><a href="/view?id=<%=(post.getId())%>"><%=post.getTitle()%>
+                </a></h4>
+                <p class="text-right">By <%=post.getUser().getName()%></p>
+                <p><%=post.getContent()%></p>
+                <ul class="list-inline list-unstyled">
+                    <li><span><i class="glyphicon glyphicon-calendar"></i><%=post.getCreatedAt()%> </span></li>
+                    <li>|</li>
+                    <span><i class="glyphicon glyphicon-calendar"></i> <%=post.getUpdatedAt()%></span>
+                    <li>|</li>
+                    <li>
+                        <%
+                            List<Category> categoryList = post.getCategories();
+                            for (Category category : categoryList) {
+                        %>
+                        #<%=category.getName()%>
+                        <%
+                            }
+                        %>
+                    </li>
+                    <li>|</li>
+                    <li>
+                        <!-- Use Font Awesome http://fortawesome.github.io/Font-Awesome/ -->
+                        <security:authorize access="isAuthenticated()">
+                            <%
+                                String user=post.getUser().getName();
+                                Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+                                String username="";
+                                String authorities="";
+                                if (principal instanceof UserDetails) {
+                                    username = ((UserDetails)principal).getUsername();
+                                    authorities= String.valueOf(((UserDetails) principal).getAuthorities());
+                                } else {
+                                    username= principal.toString();
+                                }
+                                if(user.equals(username)||authorities.equals("[ROLE_ADMIN]"))                   {
+                            %>
+                            <a href="/edit?id=<%=post.getId()%>">Edit</a>
+                            <%
+                                }
+                            %>
+                        </security:authorize>
+                        <security:authorize access="isAuthenticated()">
+                            <%
+                                String user=post.getUser().getName();
+                                Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+                                String username="";
+                                String authorities="";
+                                if (principal instanceof UserDetails) {
+                                    username = ((UserDetails)principal).getUsername();
+                                    authorities= String.valueOf(((UserDetails) principal).getAuthorities());
+                                } else {
+                                    username= principal.toString();
+                                }
+                                if(user.equals(username)||authorities.equals("[ROLE_ADMIN]"))
+                                {
+                            %>
+                            <a href="/delete-confirm?id=<%=post.getId()%>">Delete</a>
+                            <%
+                                }
+                            %>
+                        </security:authorize>
+
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+        <%}%>
 <%--<security:authorize access="!isAuthenticated()">--%>
 <%--    <%--%>
 <%--        response.sendRedirect("/");--%>
 <%--    %>--%>
 <%--</security:authorize>--%>
-<div align="center">
-    <form method="get" action="search">
-        <input type="text" name="keyword" /> &nbsp;
-        <input type="submit" value="Search" />
-    </form>
-<%  %>
+
 <%--    <form action="/filter" method="get">--%>
 <%--        Sci-fic<input type="checkbox" value="Sci-fic"/>--%>
 <%--        Motivational<input type="checkbox" value="Motivational"/>--%>
@@ -36,113 +127,111 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <%--        <input type="submit" value="Submit"/>--%>
 <%--    </form>--%>
-    <h3><a href="/new">Add New Blog</a></h3>
-    <br><br>
-    <h2> Sort By:</h2>
-    <a href="/sortbyUpdate">Update Time</a>
-    <a href="/sortbyCreate">Create Time</a>
-    <br><br><br>
-    <security:authorize access="isAuthenticated()">
-        <h2 class="text-success"> Welcome Back,<security:authentication property="name"/></h2>
-        <h3 class="text-success">You are given <security:authorize access="hasRole('USER')"> AUTHOR LEVEL PRIVILEGE</security:authorize></h3>
-        <security:authorize access="hasRole('ADMIN')"> ADMIN LEVEL PRIVILEGE  </h3>
-            <p>With Great Power Comes great Responsibility</p> </security:authorize>
-    </security:authorize>
-    <table class="table table-dark">
-        <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">AuthorName</th>
-            <th scope="col">PostTitle</th>
-            <th scope="col">Post Content</th>
-            <th scope="col">Created At</th>
-            <th scope="col">Last Updated At</th>
-            <th scope="col">Category</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <%
-                ArrayList<Post> allPost = (ArrayList<Post>) request.getAttribute("listPost");
-                int i = 0;
-                for (Post post : allPost) {
-                    i++;
-            %>
-            <td scope="row"><%=i%>
-            </td>
-            <td>
-                <p><%=post.getUser().getName()%></p>
-            </td>
-            <td>
-                <a href="/post/view/<%=post.getId()%>"><%=post.getTitle()%>
-                </a>
-            </td>
-            <td>
-                <%=post.getContent()%>
-            </td>
-            <td>
-                <%=post.getCreatedAt()%>
-            </td>
-            <td>
-                <%=post.getUpdatedAt()%>
-            </td>
-            <td>
-                <%
-                    List<Category> categoryList = post.getCategories();
-                    for (Category category : categoryList) {
-                %>
-                <%=category.getName()%>
-                <%
-                    }
-                %>
-            </td>
-            <td>
-                <security:authorize access="isAuthenticated()">
-                    <%
-                        String user=post.getUser().getName();
-                        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-                        String username="";
-                        String authorities="";
-                        if (principal instanceof UserDetails) {
-                            username = ((UserDetails)principal).getUsername();
-                            authorities= String.valueOf(((UserDetails) principal).getAuthorities());
-                        } else {
-                            username= principal.toString();
-                        }
-                        if(user.equals(username)||authorities.equals("[ROLE_ADMIN]"))                   {
-                    %>
-                    <a href="/edit?id=<%=post.getId()%>">Edit</a>
-                    <%
-                        }
-                    %>
-                </security:authorize>
-            </td>
-            <td>
-                <security:authorize access="isAuthenticated()">
-                    <%
-                        String user=post.getUser().getName();
-                        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-                        String username="";
-                        String authorities="";
-                        if (principal instanceof UserDetails) {
-                            username = ((UserDetails)principal).getUsername();
-                            authorities= String.valueOf(((UserDetails) principal).getAuthorities());
-                        } else {
-                            username= principal.toString();
-                        }
-                        if(user.equals(username)||authorities.equals("[ROLE_ADMIN]"))
-                        {
-                    %>
-                    <a href="/delete-confirm?id=<%=post.getId()%>">Delete</a>
-                    <%
-                        }
-                    %>
-                </security:authorize>
-            </td>
-        </tr>
-        </tbody>
-        <%}%>
-    </table>
+
+
+<%--    <table class="table table-dark">--%>
+<%--        <thead>--%>
+<%--        <tr>--%>
+<%--            <th scope="col">#</th>--%>
+<%--            <th scope="col">AuthorName</th>--%>
+<%--            <th scope="col">PostTitle</th>--%>
+<%--            <th scope="col">Post Content</th>--%>
+<%--            <th scope="col">Created At</th>--%>
+<%--            <th scope="col">Last Updated At</th>--%>
+<%--            <th scope="col">Category</th>--%>
+<%--        </tr>--%>
+<%--        </thead>--%>
+<%--        <tbody>--%>
+<%--        <tr>--%>
+<%--            <%--%>
+<%--                ArrayList<Post> allPost = (ArrayList<Post>) request.getAttribute("listPost");--%>
+<%--                int i = 0;--%>
+<%--                for (Post post : allPost) {--%>
+<%--                    i++;--%>
+<%--            %>--%>
+<%--            <td scope="row"><%=i%>--%>
+<%--            </td>--%>
+<%--            <td>--%>
+<%--                <p><%=post.getUser().getName()%></p>--%>
+<%--            </td>--%>
+<%--            <td>--%>
+<%--                <a href="/post/view/<%=post.getId()%>"><%=post.getTitle()%>--%>
+<%--                </a>--%>
+<%--            </td>--%>
+<%--            <td>--%>
+<%--                <%=post.getContent()%>--%>
+<%--            </td>--%>
+<%--            <td>--%>
+<%--                <%=post.getCreatedAt()%>--%>
+<%--            </td>--%>
+<%--            <td>--%>
+<%--                <%=post.getUpdatedAt()%>--%>
+<%--            </td>--%>
+<%--            <td>--%>
+<%--                <%--%>
+<%--                    List<Category> categoryList = post.getCategories();--%>
+<%--                    for (Category category : categoryList) {--%>
+<%--                %>--%>
+<%--                <%=category.getName()%>--%>
+<%--                <%--%>
+<%--                    }--%>
+<%--                %>--%>
+<%--            </td>--%>
+<%--            <td>--%>
+<%--                <security:authorize access="isAuthenticated()">--%>
+<%--                    <%--%>
+<%--                        String user=post.getUser().getName();--%>
+<%--                        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();--%>
+<%--                        String username="";--%>
+<%--                        String authorities="";--%>
+<%--                        if (principal instanceof UserDetails) {--%>
+<%--                            username = ((UserDetails)principal).getUsername();--%>
+<%--                            authorities= String.valueOf(((UserDetails) principal).getAuthorities());--%>
+<%--                        } else {--%>
+<%--                            username= principal.toString();--%>
+<%--                        }--%>
+<%--                        if(user.equals(username)||authorities.equals("[ROLE_ADMIN]"))                   {--%>
+<%--                    %>--%>
+<%--                    <a href="/edit?id=<%=post.getId()%>">Edit</a>--%>
+<%--                    <%--%>
+<%--                        }--%>
+<%--                    %>--%>
+<%--                </security:authorize>--%>
+<%--            </td>--%>
+<%--            <td>--%>
+<%--                <security:authorize access="isAuthenticated()">--%>
+<%--                    <%--%>
+<%--                        String user=post.getUser().getName();--%>
+<%--                        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();--%>
+<%--                        String username="";--%>
+<%--                        String authorities="";--%>
+<%--                        if (principal instanceof UserDetails) {--%>
+<%--                            username = ((UserDetails)principal).getUsername();--%>
+<%--                            authorities= String.valueOf(((UserDetails) principal).getAuthorities());--%>
+<%--                        } else {--%>
+<%--                            username= principal.toString();--%>
+<%--                        }--%>
+<%--                        if(user.equals(username)||authorities.equals("[ROLE_ADMIN]"))--%>
+<%--                        {--%>
+<%--                    %>--%>
+<%--                    <a href="/delete-confirm?id=<%=post.getId()%>">Delete</a>--%>
+<%--                    <%--%>
+<%--                        }--%>
+<%--                    %>--%>
+<%--                </security:authorize>--%>
+<%--            </td>--%>
+<%--        </tr>--%>
+<%--        </tbody>--%>
+<%--        <%}%>--%>
+<%--    </table>--%>
+
+
+
+
+
+
+
+
 <%--    <table border="1" cellpadding="5">--%>
 <%--    <%ArrayList<Post> allPost = (ArrayList<Post>) request.getAttribute("listPost");%>--%>
 <%--        <tr>--%>

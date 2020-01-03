@@ -12,9 +12,9 @@
     <title>Register</title>
 </head>
 <form:form action="/register" method="post" modelAttribute="user">
-    <form:input path="name"/>
-    <form:input path="email"/>
-    <form:input path="password"/>
+    Name: <form:input path="name"/>
+    Email: <form:input path="email"/>
+    Password: <form:input path="password"/>
     <input type="submit" value="Register">
 </form:form>
 
