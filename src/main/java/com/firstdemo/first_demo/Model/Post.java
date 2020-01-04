@@ -32,7 +32,7 @@ public class Post {
     @Column(name="updatedat")
     @UpdateTimestamp
     private Timestamp updatedAt;
-
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY,
             cascade = {
                     CascadeType.PERSIST,

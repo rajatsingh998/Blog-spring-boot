@@ -6,26 +6,35 @@
 //import com.firstdemo.first_demo.Service.CategoryService;
 //
 //import com.firstdemo.first_demo.Service.PostService;
+//import com.firstdemo.first_demo.Service.UserService;
+//
 //import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.data.domain.Page;
 //import org.springframework.data.domain.PageRequest;
 //import org.springframework.data.domain.Sort;
 //import org.springframework.http.HttpStatus;
 //import org.springframework.http.ResponseEntity;
+//import org.springframework.security.authentication.AuthenticationManager;
+//import org.springframework.security.authentication.BadCredentialsException;
+//import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+//import org.springframework.security.core.userdetails.UserDetails;
 //import org.springframework.web.bind.annotation.*;
 //
 //
 //import java.util.List;
 ////
 //@RestController
-//@RequestMapping("/")
+//
 //public class BlogRestController {
+//    @Autowired
+//    private AuthenticationManager authenticationManager;
 //    @Autowired
 //    private PostService blogService;
 //
 //    @Autowired
 //    private CategoryService categoryService;
 //
+//    @Autowired
+//    private UserService userDetailsService;
 //
 //
 //    @GetMapping(value = "/")

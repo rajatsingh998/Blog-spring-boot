@@ -1,9 +1,11 @@
 package com.firstdemo.first_demo.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -13,11 +15,13 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
+    @NotNull
     private String name;
 
 
-
+    @NotNull
     private String email;
+    @NotNull
     private String password;
     private String role;
     @Column(name = "created_at",updatable = false)
@@ -37,7 +41,7 @@ public class User {
 
     public User() {
     }
-
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY,
             cascade = {
                     CascadeType.PERSIST,
