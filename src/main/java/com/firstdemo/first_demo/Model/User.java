@@ -16,6 +16,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
     @NotNull
+    @Column(unique = true)
     private String name;
 
 

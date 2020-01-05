@@ -41,13 +41,18 @@
 
             <li class="nav-item active">
 
-                <a class="nav-link text-light" href="http://localhost:8080/">Home<span class="sr-only">(current)</span></a>
+                <a class="nav-link text-light" href="/">Home<span class="sr-only">(current)</span></a>
 
             </li>
 
             <li class="nav-item">
 
-                <a class="nav-link text-light" href="http://localhost:8080/new">New Blog</a>
+                <a class="nav-link text-light" href="/new">New Blog</a>
+
+            </li>
+            <li class="nav-item">
+
+                <a class="nav-link text-light" href="/register">Registration</a>
 
             </li>
 
@@ -73,7 +78,7 @@
 
             <li class="nav-item">
                 <sec:authorize access="hasAnyRole('ROLE_ADMIN') || hasAnyRole('ROLE_USER')">
-                    <a class="nav-link text-light" href="http://localhost:8080/logout">Logout</a>
+                    <a class="nav-link text-light" href="http://localhost:808/logout">Logout</a>
                 </sec:authorize>
                 <sec:authorize access="!hasAnyRole('ROLE_ADMIN')&& !hasAnyRole('ROLE_USER')  ">
                     <a class="nav-link text-light" href="http://localhost:8080/login">Login</a>

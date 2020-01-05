@@ -11,14 +11,15 @@
 <head>
     <title>Register</title>
 </head>
+
+
+<body>
+<jsp:include page="header.jsp" />
 <form:form action="/register" method="post" modelAttribute="user">
-    Name: <form:input path="name"/>
+    User Name: <form:input path="name"/>
     Email: <form:input path="email"/>
     Password: <form:input path="password"/>
     <input type="submit" value="Register">
 </form:form>
-
-<body>
-
 </body>
 </html>

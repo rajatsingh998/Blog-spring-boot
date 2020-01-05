@@ -145,8 +145,8 @@ public class PostController {
                 e.printStackTrace();
                 mav.setViewName("error.jsp");
             }
-        mav.addObject("totalPost",blogService.listAll().size());
-        mav.addObject("result", result);
+        mav.addObject("totalPost",result.size());
+        mav.addObject("allPost", result);
         log.debug("Exiting Searching");
         return mav;
     }
@@ -305,6 +305,14 @@ public class PostController {
     //
     @RequestMapping(value = "/edit")
     public ModelAndView editCustomerForm(@RequestParam int id) {
+        if(id!=(int)id){
+            log.error("id is not of int type");
+            String msg= "error happened while editing the Blog ";
+            ModelAndView mv= new ModelAndView();
+            mv.addObject("msg",msg);
+            mv.setViewName("error.jsp");
+            return mv;
+        }
         Category category= new Category();
         ModelAndView mav = new ModelAndView("edit-blog.jsp");
         Post theBlog=new Post();
@@ -357,8 +365,10 @@ public class PostController {
             log.debug("Exiting new blog process");
             return mv;
         }
+
         ModelAndView mav = new ModelAndView("filtered.jsp");
-        mav.addObject("result", result);
+        mav.addObject("totalPost",result.size());
+        mav.addObject("allPost", result);
         return mav;
     }
 

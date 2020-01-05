@@ -293,7 +293,7 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%--        </c:forEach>--%>
 <%--    </table>--%>
 
-</div>
+
 <%
     for (int j=0;j*3<(int)request.getAttribute("totalPost");j++){%>
 <a href="?page=<%=j%>"><%=j%></a>
