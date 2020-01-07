@@ -25,7 +25,7 @@
 <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css"/>
 <nav class="navbar navbar-expand-lg navbar-light bg-info">
 
-    <a class="navbar-brand text-light" href="https://www.jquery-az.com/" >Slogan/Logo</a>
+    <a class="navbar-brand text-light" href="/" >Bloggggging</a>
 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#demo-navbar" aria-controls="demo-navbar" aria-expanded="false" aria-label="Toggle navigation">
 
@@ -78,10 +78,10 @@
 
             <li class="nav-item">
                 <sec:authorize access="hasAnyRole('ROLE_ADMIN') || hasAnyRole('ROLE_USER')">
-                    <a class="nav-link text-light" href="http://localhost:808/logout">Logout</a>
+                    <a class="nav-link text-light" href="/logout">Logout</a>
                 </sec:authorize>
                 <sec:authorize access="!hasAnyRole('ROLE_ADMIN')&& !hasAnyRole('ROLE_USER')  ">
-                    <a class="nav-link text-light" href="http://localhost:8080/login">Login</a>
+                    <a class="nav-link text-light" href="/login">Login</a>
                 </sec:authorize>
 
 

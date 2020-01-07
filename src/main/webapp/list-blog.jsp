@@ -23,6 +23,7 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <title>All Blogs</title>
+
 </head>
 <body>
 <jsp:include page="header.jsp" />
